@@ -1,7 +1,6 @@
 package mariya.dimitrova.multithreading;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * this inner class is used as a closure(implements Holder), because we do not
@@ -10,13 +9,7 @@ import java.util.Vector;
  * BCServer does not have to wait this class's operations
  */
 public class PlayersHolder implements Holder, Runnable {
-    private Vector players;
-
-    /**
-     * default constructor
-     */
-    public PlayersHolder() {
-    }
+    private ArrayList<Player> players;
 
     /**
      * add player to the playersHolder. Does it synchronizing on the players
@@ -41,15 +34,14 @@ public class PlayersHolder implements Holder, Runnable {
     @Override
     public FreePlayers getFreePlayers() {
         synchronized (this.players) {
-            // StringBuffer choices = new StringBuffer("Free
-            // Players:\n0)(wait for another player to choose you)");
             ArrayList<Player> freePlayers = new ArrayList<Player>();
             for (int i = 0; i < this.players.size(); i++) {
-                Player player = (Player) this.players.elementAt(i);
+                Player player = this.players.get(i);
                 if (!player.isBusy()) {
                     freePlayers.add(player);
                 }
             }
+
             return new FreePlayers(freePlayers);
         }
     }
@@ -66,7 +58,7 @@ public class PlayersHolder implements Holder, Runnable {
     @Override
     public Player getPlayer(int i) {
         synchronized (this.players) {
-            return (Player) this.players.get(i);
+            return this.players.get(i);
         }
     }
 
@@ -88,6 +80,6 @@ public class PlayersHolder implements Holder, Runnable {
      */
     @Override
     public void run() {
-        this.players = new Vector();
+        this.players = new ArrayList<Player>();
     }
 }

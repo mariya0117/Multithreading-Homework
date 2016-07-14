@@ -5,17 +5,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Class holds player's reader and writer. It has readLine() and writeLine()
- * methods to ease the communication
+ * this class holds player's reader and writer. It has readLine() and
+ * writeLine() methods to ease the communication
  *
  * @author Mihail Stoynov
  */
-class Player {
+public class Player {
     private String name;
     private boolean isBusy;
     private PrintWriter playerWriter;
     private BufferedReader playerReader;
-    private char[] playerNumber;
+    private char[] playerNumber = null;
 
     /**
      * general purpose constructor, initializes member variables /@param name
@@ -37,7 +37,7 @@ class Player {
     }
 
     /**
-     * Gets the player number
+     * gets the player number
      *
      * @return the number
      */
@@ -65,18 +65,24 @@ class Player {
     }
 
     /**
+     * name setter
+     *
+     * @param name
+     *            the new name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
      * asks the player for its name
      *
      * @return the player name
      */
     public String askForName() {
         this.write("Please enter your name: ");
-        try {
-            return this.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+
+        return this.readLine();
     }
 
     /**
@@ -104,15 +110,8 @@ class Player {
         }
     }
 
-    /**
-     * name setter
-     *
-     * @param name
-     *            the new name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+
+    // hoi
 
     /**
      * reads one char
@@ -138,7 +137,6 @@ class Player {
             while (this.playerReader.skip(1L) > 0) {
                 result++;
             }
-            // return playerReader.skip(Long.MAX_VALUE);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -164,8 +162,15 @@ class Player {
      * @throws IOException
      *             socket closed or some other error
      */
-    public String readLine() throws IOException {
-        String s = this.playerReader.readLine();
+    public String readLine() {
+        String s = "";
+
+        try {
+            s = this.playerReader.readLine().trim();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return s;
     }
 

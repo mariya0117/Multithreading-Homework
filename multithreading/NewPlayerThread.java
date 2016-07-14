@@ -24,22 +24,20 @@ public class NewPlayerThread implements Runnable {
     @Override
     public void run() {
         try {
-            this.player.setName(this.player.askForName());
+            String name = this.player.askForName();
+            this.player.setName(name);
+
             Thread.currentThread().setName(this.player.getName());
             int choice;
             FreePlayers freePlayers;
-            // while invalid choice or player busy...
+
             do {
                 freePlayers = this.holder.getFreePlayers();
                 this.displayPossibleChoices(freePlayers);
                 choice = this.getPlayerChoice();
 
                 if (choice <= -1 ||
-                        choice > freePlayers.size() ||
-                        (choice != 0 && !freePlayers.getPlayer(choice).setSafelyBusy())// todo:
-                                                                                       // look
-                                                                                       // setSafelyBusy
-                ) {
+                        choice > freePlayers.size()) {
                     this.player.writeLine("");
                     this.player.writeLine("Bad choice or player busy");
                     choice = -1;
@@ -48,17 +46,11 @@ public class NewPlayerThread implements Runnable {
 
             if (choice == 0) {
                 this.holder.addPlayer(this.player);
-                // player.writeLine("");//todo: remove this line in release
-                // version
-                // player.writeLine("You chose to wait");//todo: remove this
-                // line in release version
             } else {
-                // asked player is p1, he starts first in the game
                 Player p1 = freePlayers.getPlayer(choice);
 
                 p1.writeLine("");
                 this.player.writeLine("");
-                // strange, but game title is p2 vs p1
                 String gameTitle = this.player.getName() + " vs " + p1.getName() + " Game started";
                 p1.writeLine(gameTitle);
                 this.player.writeLine(gameTitle);
@@ -69,8 +61,7 @@ public class NewPlayerThread implements Runnable {
             }
 
         } catch (IOException e) {
-            e.printStackTrace(); // To change body of catch statement use File |
-                                 // Settings | File Templates.
+            e.printStackTrace();
         }
     }
 
@@ -81,15 +72,18 @@ public class NewPlayerThread implements Runnable {
         this.player.writeLine("");
         this.player.writeLine("Free Players:");
         this.player.writeLine("0) (wait for another player to choose you)");
+
         for (int i = 1; i <= freePlayers.size(); i++) {
             Player freePlayer = freePlayers.getPlayer(i);
             this.player.writeLine(i + ")" + freePlayer.getName());
         }
+
         this.player.write("Choose player: ");
     }
 
     /**
-     * gets player choice
+     * gets player choice; If -1, it mean there was an exceptions and the input
+     * is wrong.
      *
      * @return the player choice
      * @throws IOException
@@ -97,6 +91,7 @@ public class NewPlayerThread implements Runnable {
      */
     private int getPlayerChoice() throws IOException {
         int choice;
+
         do {
             try {
                 choice = Integer.parseInt(this.player.readLine());
@@ -104,6 +99,7 @@ public class NewPlayerThread implements Runnable {
                 choice = -1;
             }
         } while (choice == -1);
+
         return choice;
     }
 }

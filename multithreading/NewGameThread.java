@@ -3,7 +3,7 @@ package mariya.dimitrova.multithreading;
 /**
  * this class represents a game of bulls and cows
  */
-class NewGameThread implements Runnable {
+public class NewGameThread implements Runnable {
     private static final int WAIT_MILIS = 500;
     private Player p1;// the player that starts first
     private Player p2;// the player that is second
@@ -50,7 +50,12 @@ class NewGameThread implements Runnable {
         }
         Thread.currentThread().setName(this.p1.getName() + " vs " + this.p2.getName());
 
-        this.startGame();
+        try {
+            this.startGame();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -130,8 +135,10 @@ class NewGameThread implements Runnable {
 
     /**
      * the game method
+     * 
+     * @throws InterruptedException
      */
-    public void startGame() {
+    public void startGame() throws InterruptedException {
         boolean noWinner = true;
         // char[] p1Guess = new char[4];
         // char[] p2Guess = new char[4];
@@ -161,6 +168,9 @@ class NewGameThread implements Runnable {
                 offTurn = temp;
             }
         }
+
+        onTurn.wait(10000);
+        offTurn.wait(10000);
         onTurn.closeStreams();
         offTurn.closeStreams();
         this.holder.removePlayer(onTurn);
