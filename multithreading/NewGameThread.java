@@ -11,7 +11,7 @@ public class NewGameThread implements Runnable {
      * the holder, because when the game ends, holder must be given to
      * NewPlayerThread
      */
-    private Holder holder;
+    private Players holder;
     // private char[] p1Number = null;
     // private char[] p2Number = null;
 
@@ -26,7 +26,7 @@ public class NewGameThread implements Runnable {
      *            the holder , because when the game ends, player must be given
      *            to NewPlayerThread
      */
-    public NewGameThread(Player p1, Player p2, Holder holder) {
+    public NewGameThread(Player p1, Player p2, Players holder) {
         this.p1 = p1;
         this.p2 = p2;
         this.holder = holder;
@@ -40,20 +40,22 @@ public class NewGameThread implements Runnable {
     public void run() {
         this.readP1Number();
         Thread.currentThread().setName(this.p1.getName() + " vs UNKNOWN");
+
         while (!Thread.currentThread().isInterrupted() && this.p2.getNumber() == null) {
             System.out.println("SLEEP-" + WAIT_MILIS);
+
             try {
                 Thread.sleep(WAIT_MILIS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
         Thread.currentThread().setName(this.p1.getName() + " vs " + this.p2.getName());
 
         try {
             this.startGame();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -135,7 +137,7 @@ public class NewGameThread implements Runnable {
 
     /**
      * the game method
-     * 
+     *
      * @throws InterruptedException
      */
     public void startGame() throws InterruptedException {

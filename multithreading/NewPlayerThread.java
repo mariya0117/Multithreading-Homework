@@ -8,7 +8,7 @@ import java.io.IOException;
  */
 public class NewPlayerThread implements Runnable {
     Player player;
-    Holder holder;
+    Players holder;
 
     /**
      * general purpose constructor.
@@ -16,7 +16,7 @@ public class NewPlayerThread implements Runnable {
      * @param newPlayer
      *            the new player
      */
-    public NewPlayerThread(Player newPlayer, Holder holder) {
+    public NewPlayerThread(Player newPlayer, Players holder) {
         this.player = newPlayer;
         this.holder = holder;
     }

@@ -2,40 +2,44 @@ package mariya.dimitrova.multithreading;
 
 import java.util.ArrayList;
 
-/**
- * class that holds the currently free players
+/****
+ * A
+ *
+ * class that contains all of the players that can currently participate in
+ * a*game.**
  *
  * @author Mihail Stoynov
  */
-public class FreePlayers {
 
+public class FreePlayers {
     private ArrayList<Player> freePlayers;
 
     /**
-     * general purpose constructor, only constructor
+     * Creates a list of all of the free players.
      *
      * @param freePlayers
-     *            the players
+     *            List of free Players.
      */
     public FreePlayers(ArrayList<Player> freePlayers) {
         this.freePlayers = freePlayers;
     }
 
     /**
-     * returns one player
+     * Gets a player at a certain index. The indexes start from 1. Used at the
+     * begging of the game, when the player chooses a opponent.
      *
-     * @param i
-     *            the player number
-     * @return the player
+     * @param index
+     *            The index of the free player you want.
+     * @return The free player.
      */
-    public Player getPlayer(int i) {
-        return this.freePlayers.get(i - 1);
+    public Player getPlayer(int index) {
+        return this.freePlayers.get(index - 1);
     }
 
     /**
-     * returns the number of free players currently
+     * Gets the size of the list of free players. Used to iterate over the list.
      *
-     * @return their number
+     * @return Returns the number of free players currently.
      */
     public int size() {
         return this.freePlayers.size();
