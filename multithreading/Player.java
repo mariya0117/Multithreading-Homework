@@ -5,55 +5,57 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * this class holds player's reader and writer. It has readLine() and
- * writeLine() methods to ease the communication
+ * This class contains the players writer and reader.
  *
- * @author Mihail Stoynov
+ * @author mariyadimitrova
+ *
  */
 public class Player {
     private String name;
     private boolean isBusy;
     private PrintWriter playerWriter;
     private BufferedReader playerReader;
-    private char[] playerNumber = null;
+    private String playerNumber;
 
     /**
-     * general purpose constructor, initializes member variables /@param name
-     * player name
+     * Creates a new player with reader and writer. By default (in the begging
+     * of the game) the player is not busy.
      *
      * @param clientWriter
-     *            player text output
      * @param clientReader
-     *            player text input
      */
     public Player(PrintWriter clientWriter, BufferedReader clientReader) {
-        // if bad data
         if (clientWriter == null || clientReader == null) {
             throw new NullPointerException("Player: null data supplied");
         }
+
         this.isBusy = false;
         this.playerWriter = clientWriter;
         this.playerReader = clientReader;
     }
 
     /**
-     * gets the player number
+     * Get the value of the number of the player.
      *
-     * @return the number
+     * @return This value.
      */
-    public char[] getNumber() {
+    public String getNumber() {
         return this.playerNumber;
     }
 
     /**
-     * sets the player number
+     * Sets the new value of the number of the player.
      *
      * @param playerNumber
-     *            the new player number
+     *            The new value to be set.
      */
-    public void setNumber(char[] playerNumber) {
+    public void setNumber(String playerNumber) {
         this.playerNumber = playerNumber;
     }
+
+    /**
+     *
+     */
 
     /**
      * name getter
@@ -109,7 +111,6 @@ public class Player {
             return true;
         }
     }
-
 
     // hoi
 

@@ -83,7 +83,7 @@ public class NewGameThread implements Runnable {
      *            the string to be prompted to ther user
      * @return the digit
      */
-    private char[] readNumber(Player player, String userLine) {
+    private String readNumber(Player player, String userLine) {
         char[] result = new char[4];
         boolean badNumber = true;
 
@@ -105,8 +105,6 @@ public class NewGameThread implements Runnable {
                 }
             }
 
-            // player.skip();
-
             if (this.hasEqualDigits(result)) {
                 player.writeLine("");
                 player.writeLine("You cannot have equal digits !");
@@ -114,11 +112,7 @@ public class NewGameThread implements Runnable {
             }
         }
 
-        // player.writeLine("");//todo: remove this line in release
-        // player.writeLine("The Number U entered is "+
-        // result[0]+result[1]+result[2]+result[3]);//todo: remove this line in
-        // release
-        return result;
+        return result.toString();
     }
 
     /**
@@ -150,13 +144,12 @@ public class NewGameThread implements Runnable {
 
         while (noWinner) {
             // asking player is first
-            char[] onTurnGuess = this.readNumber(onTurn, "Please make your guess: ");
+            String onTurnGuess = this.readNumber(onTurn, "Please make your guess: ");
             int offTurnCows = this.nCows(offTurn.getNumber(), onTurnGuess);
             int offTurnBulls = this.nBulls(offTurn.getNumber(), onTurnGuess);
             String guessString = " --> " + offTurnCows + "c" + offTurnBulls + "b";
             onTurn.write(guessString);
-            offTurn.writeLine("\t" + this.p1.getName() + "'s Guess " + onTurnGuess[0] + onTurnGuess[1] + onTurnGuess[2]
-                    + onTurnGuess[3] + guessString);
+            offTurn.writeLine("\t" + this.p1.getName() + "'s Guess " + onTurnGuess + guessString);
             if (offTurnBulls == 4) {
                 onTurn.writeLine("");
                 onTurn.writeLine("");
@@ -188,7 +181,10 @@ public class NewGameThread implements Runnable {
      *            the other player guess
      * @return bulls
      */
-    private int nBulls(char[] number, char[] guess) {
+    private int nBulls(String playersNumber, String playersGuess) {
+        char[] guess = playersGuess.toCharArray();
+        char[] number = playersNumber.toCharArray();
+
         int result = 0;
         if (number[0] == guess[0]) {
             result++;
@@ -214,7 +210,10 @@ public class NewGameThread implements Runnable {
      *            the other player guess
      * @return cows
      */
-    private int nCows(char[] number, char[] guess) {
+    private int nCows(String playersNumber, String playersGuess) {
+        char[] guess = playersGuess.toCharArray();
+        char[] number = playersNumber.toCharArray();
+
         int result = 0;
         if (number[0] == guess[1]) {
             result++;

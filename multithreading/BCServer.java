@@ -7,14 +7,28 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * The server of the program. Implements Runnable and the main method invokes
+ * the overridden run method.
+ *
+ * @author mariyadimitrova
+ *
+ */
 public class BCServer implements Runnable {
     private static final int PORT = 3008;
     private Players waitingPlayers;
 
+    /**
+     * Creates a new server. Initializes the waiting players.
+     */
     public BCServer() {
         this.waitingPlayers = new Players();
     }
 
+    /**
+     * Initializes the server socket, the socket and listens for new players. If
+     * a new players arrives, It starts his run method.
+     */
     @Override
     public void run() {
         ServerSocket serverSocket = null;
