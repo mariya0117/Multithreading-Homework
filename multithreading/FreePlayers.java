@@ -2,15 +2,6 @@ package mariya.dimitrova.multithreading;
 
 import java.util.ArrayList;
 
-/****
- * A
- *
- * class that contains all of the players that can currently participate in
- * a*game.**
- *
- * @author Mihail Stoynov
- */
-
 public class FreePlayers {
     private ArrayList<Player> freePlayers;
 
